@@ -1,6 +1,7 @@
 import appScreen1 from "figma:asset/2b0bd1795831ea72492a9d4f5b61be303132e851.png";
 import appScreen3 from "figma:asset/36b694f179b69db68e228412ca297b91f6fbbae7.png";
 import appScreen2 from "figma:asset/ddd511a576576702adf6b63939e3c4852377ee8e.png";
+import logo from "./assets/logo.webp";
 import {
   ArrowRight,
   Clock,
@@ -28,9 +29,7 @@ export default function App() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <div className="w-10 h-10 bg-gradient-to-br from-[#3D6B85] to-[#2C5166] rounded-xl flex items-center justify-center">
-                <span className="text-white">V</span>
-              </div>
+              <img src={logo} alt="Venecol Express" className="w-10 h-10 rounded-xl" />
               <div>
                 <div className="text-[#3D6B85]">Venecol Express</div>
                 <div className="text-xs text-gray-500">
