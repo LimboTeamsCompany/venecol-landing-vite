@@ -137,8 +137,8 @@ export default function App() {
 
       {/* Calculator Section */}
       <section className="bg-gradient-to-br from-[#6B8E9D] to-[#3D6B85] py-12">
-        <div className="max-w-md mx-auto px-4">
-          <div className="bg-white rounded-3xl shadow-2xl p-8">
+        <div className="max-w-7xl mx-auto px-4 flex justify-center">
+          <div className="bg-white rounded-3xl shadow-2xl p-8 w-full" style={{ maxWidth: '400px' }}>
             <h3 className="text-gray-700 text-sm font-medium mb-4">Tú envías</h3>
 
             <div className="mb-6">
