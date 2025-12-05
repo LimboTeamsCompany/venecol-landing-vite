@@ -58,7 +58,7 @@ const currencies = [
 ];
 
 export default function App() {
-  const [selectedCurrency, setSelectedCurrency] = useState("CLP");
+  const [selectedCurrency, setSelectedCurrency] = useState("USDT");
   const [amount, setAmount] = useState("");
 
   const handleCurrencyChange = (value: string) => {
