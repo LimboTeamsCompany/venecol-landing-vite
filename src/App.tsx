@@ -57,8 +57,37 @@ const currencies = [
   },
 ];
 
+const getDefaultCurrency = () => {
+  const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+
+  // Chile timezones
+  if (timezone.includes("Santiago") || timezone.includes("Chile")) {
+    return "CLP";
+  }
+
+  // Colombia timezones
+  if (timezone.includes("Bogota") || timezone.includes("Colombia")) {
+    return "COP";
+  }
+
+  // Peru timezones
+  if (timezone.includes("Lima") || timezone.includes("Peru")) {
+    return "PEN";
+  }
+
+  // Brazil timezones
+  if (timezone.includes("Sao_Paulo") || timezone.includes("Brazil") ||
+      timezone.includes("Brasilia") || timezone.includes("Manaus") ||
+      timezone.includes("Fortaleza") || timezone.includes("Recife")) {
+    return "BRL";
+  }
+
+  // Default to USDT if not in any of these countries
+  return "USDT";
+};
+
 export default function App() {
-  const [selectedCurrency, setSelectedCurrency] = useState("USDT");
+  const [selectedCurrency, setSelectedCurrency] = useState(getDefaultCurrency());
   const [amount, setAmount] = useState("");
 
   const handleCurrencyChange = (value: string) => {
