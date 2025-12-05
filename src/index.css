@@ -1602,3 +1602,15 @@ html {
   inherits: false;
   initial-value: 1;
 }
+
+/* Custom styles for mobile phone mockups */
+.phone-mockup-rounded {
+  border-radius: 28px !important;
+  overflow: hidden !important;
+}
+
+@media (min-width: 768px) {
+  .phone-mockup-rounded {
+    border-radius: 32px !important;
+  }
+}

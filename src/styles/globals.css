@@ -189,3 +189,15 @@
 html {
   font-size: var(--font-size);
 }
+
+/* Custom styles for mobile phone mockups */
+.phone-mockup-rounded {
+  border-radius: 50px !important;
+  overflow: hidden !important;
+}
+
+@media (min-width: 768px) {
+  .phone-mockup-rounded {
+    border-radius: 60px !important;
+  }
+}
