@@ -11,10 +11,75 @@ import {
   Shield,
   Star,
   Users,
+  ChevronDown,
+  Check,
 } from "lucide-react";
 import { ImageWithFallback } from "./components/figma/ImageWithFallback";
+import * as Select from "@radix-ui/react-select";
+import { useState } from "react";
+
+const currencies = [
+  {
+    value: "CLP",
+    label: "Pesos Chilenos",
+    flagUrl: "https://flagcdn.com/w40/cl.png",
+    symbol: "$",
+    minAmount: 10000
+  },
+  {
+    value: "COP",
+    label: "Pesos Colombianos",
+    flagUrl: "https://flagcdn.com/w40/co.png",
+    symbol: "$",
+    minAmount: 10000
+  },
+  {
+    value: "PEN",
+    label: "Soles Peruanos",
+    flagUrl: "https://flagcdn.com/w40/pe.png",
+    symbol: "S/",
+    minAmount: 10
+  },
+  {
+    value: "BRL",
+    label: "Reales Brasileños",
+    flagUrl: "https://flagcdn.com/w40/br.png",
+    symbol: "R$",
+    minAmount: 10
+  },
+  {
+    value: "USDT",
+    label: "USDT",
+    flagUrl: "https://cryptologos.cc/logos/tether-usdt-logo.png",
+    symbol: "₮",
+    minAmount: 10
+  },
+];
 
 export default function App() {
+  const [selectedCurrency, setSelectedCurrency] = useState("CLP");
+  const [amount, setAmount] = useState("");
+
+  const handleCurrencyChange = (value: string) => {
+    setSelectedCurrency(value);
+    setAmount("");
+  };
+
+  const handleAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value.replace(/\D/g, "");
+    setAmount(value);
+  };
+
+  const formatAmount = (value: string) => {
+    if (!value) return "";
+    return parseInt(value).toLocaleString("es-CL");
+  };
+
+  const currentCurrency = currencies.find((c) => c.value === selectedCurrency);
+  const numericAmount = amount ? parseInt(amount) : 0;
+  const isValidAmount = numericAmount >= (currentCurrency?.minAmount || 0);
+  const showError = amount && !isValidAmount;
+
   const playStoreUrl =
     "https://play.google.com/store/apps/details?id=venecol.express";
   const whatsappUrl = `https://wa.me/56933313118?text=${encodeURIComponent(
@@ -69,6 +134,108 @@ export default function App() {
           </div>
         </div>
       </header>
+
+      {/* Calculator Section */}
+      <section className="bg-gradient-to-br from-[#6B8E9D] to-[#3D6B85] py-12">
+        <div className="max-w-md mx-auto px-4">
+          <div className="bg-white rounded-3xl shadow-2xl p-8">
+            <h3 className="text-gray-700 text-sm font-medium mb-4">Tú envías</h3>
+
+            <div className="mb-6">
+              <Select.Root value={selectedCurrency} onValueChange={handleCurrencyChange}>
+                <Select.Trigger className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-4 text-gray-700 focus:outline-none focus:ring-2 focus:ring-[#3D6B85]/20 cursor-pointer text-base flex items-center justify-between">
+                  <div className="flex items-center gap-3">
+                    <img
+                      src={currencies.find((c) => c.value === selectedCurrency)?.flagUrl}
+                      alt=""
+                      className="w-8 h-8 rounded-full object-cover"
+                    />
+                    <Select.Value>
+                      {currencies.find((c) => c.value === selectedCurrency)?.label}
+                    </Select.Value>
+                  </div>
+                  <Select.Icon>
+                    <ChevronDown className="w-5 h-5 text-gray-400" />
+                  </Select.Icon>
+                </Select.Trigger>
+
+                <Select.Portal>
+                  <Select.Content className="bg-white rounded-xl shadow-2xl border border-gray-200 overflow-hidden z-50 min-w-[var(--radix-select-trigger-width)]">
+                    <Select.Viewport className="py-3 px-3">
+                      {currencies.map((currency) => (
+                        <Select.Item
+                          key={currency.value}
+                          value={currency.value}
+                          className="flex items-center justify-between gap-4 px-4 py-4 rounded-lg cursor-pointer hover:bg-gray-100 focus:bg-gray-100 data-[state=checked]:bg-[#3D6B85]/15 data-[state=checked]:border data-[state=checked]:border-[#3D6B85]/30 outline-none"
+                        >
+                          <div className="flex items-center gap-4">
+                            <img
+                              src={currency.flagUrl}
+                              alt=""
+                              className="w-8 h-8 rounded-full object-cover"
+                            />
+                            <Select.ItemText className="text-gray-700 text-base data-[state=checked]:font-semibold data-[state=checked]:text-[#3D6B85]">
+                              {currency.label}
+                            </Select.ItemText>
+                          </div>
+                          <Select.ItemIndicator>
+                            <Check className="w-6 h-6 text-[#3D6B85] stroke-[3]" />
+                          </Select.ItemIndicator>
+                        </Select.Item>
+                      ))}
+                    </Select.Viewport>
+                  </Select.Content>
+                </Select.Portal>
+              </Select.Root>
+            </div>
+
+            <h3 className="text-gray-700 text-sm font-medium mb-4">Monto a enviar</h3>
+
+            <div className="mb-8">
+              <div className="flex items-center gap-2 bg-gray-50 rounded-xl px-4 py-3">
+                <span className="text-3xl text-gray-500">
+                  {currentCurrency?.symbol}
+                </span>
+                <input
+                  type="text"
+                  inputMode="numeric"
+                  placeholder="0"
+                  value={formatAmount(amount)}
+                  onChange={handleAmountChange}
+                  className="flex-1 text-3xl text-gray-700 bg-transparent outline-none focus:outline-none focus:ring-0 focus:border-none border-0 shadow-none"
+                  style={{ border: "none", outline: "none", boxShadow: "none" }}
+                />
+              </div>
+              {showError && (
+                <p className="text-sm mt-2 font-semibold" style={{ color: '#DC2626' }}>
+                  Mínimo: {currentCurrency?.symbol} {formatAmount(currentCurrency?.minAmount.toString() || "")}
+                </p>
+              )}
+            </div>
+
+            {isValidAmount && amount ? (
+              <a
+                href={playStoreUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full bg-[#3D6B85] text-white py-4 rounded-full flex items-center justify-center gap-3 hover:bg-[#2C5166] transition-colors shadow-lg"
+              >
+                <span className="text-lg">📱</span>
+                <span>Calcular envío</span>
+              </a>
+            ) : (
+              <div className="w-full py-4 rounded-full flex items-center justify-center gap-3 cursor-not-allowed shadow-lg" style={{ backgroundColor: '#7A95A3', color: 'white' }}>
+                <span className="text-lg">📱</span>
+                <span>Calcular envío</span>
+              </div>
+            )}
+
+            <p className="text-center text-sm text-gray-500 mt-4">
+              Calcula tu envío en la app con la tasa del día
+            </p>
+          </div>
+        </div>
+      </section>
 
       {/* Hero Section */}
       <section className="bg-gradient-to-br from-[#3D6B85] via-[#4A7A96] to-[#3D6B85] text-white">
