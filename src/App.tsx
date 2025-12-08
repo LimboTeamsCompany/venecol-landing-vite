@@ -18,6 +18,7 @@ import { ImageWithFallback } from "./components/figma/ImageWithFallback";
 import * as Select from "@radix-ui/react-select";
 import { useState } from "react";
 import { Analytics } from "@vercel/analytics/react";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 const currencies = [
   {
@@ -691,6 +692,7 @@ export default function App() {
         </div>
       </footer>
       <Analytics />
+      <SpeedInsights />
     </div>
   );
 }
