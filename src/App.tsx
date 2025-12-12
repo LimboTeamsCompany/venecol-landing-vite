@@ -58,7 +58,12 @@ const currencies = [
   },
 ];
 
-const getDefaultCurrency = () => {
+const getDefaultCurrency = (sourceRegion?: string) => {
+  // If source region is explicitly provided, use it
+  if (sourceRegion === "chile") {
+    return "CLP";
+  }
+
   const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
 
   // Chile timezones
@@ -87,8 +92,8 @@ const getDefaultCurrency = () => {
   return "USDT";
 };
 
-export default function App() {
-  const [selectedCurrency, setSelectedCurrency] = useState(getDefaultCurrency());
+export default function App({ sourceRegion }: { sourceRegion?: string } = {}) {
+  const [selectedCurrency, setSelectedCurrency] = useState(getDefaultCurrency(sourceRegion));
   const [amount, setAmount] = useState("");
 
   const handleCurrencyChange = (value: string) => {
