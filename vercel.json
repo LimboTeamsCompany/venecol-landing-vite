@@ -3,6 +3,10 @@
     {
       "source": "/sur",
       "destination": "/index.html"
+    },
+    {
+      "source": "/brasil",
+      "destination": "/index.html"
     }
   ],
   "headers": [
