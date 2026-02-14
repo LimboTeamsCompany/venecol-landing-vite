@@ -9,6 +9,7 @@
       <Routes>
         <Route path="/" element={<App />} />
         <Route path="/sur" element={<App sourceRegion="chile" />} />
+        <Route path="/brasil" element={<App sourceRegion="brasil" />} />
       </Routes>
     </BrowserRouter>
   );

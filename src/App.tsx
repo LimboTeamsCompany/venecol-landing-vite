@@ -1,6 +1,9 @@
 import appScreen1 from "figma:asset/2b0bd1795831ea72492a9d4f5b61be303132e851.png";
 import appScreen3 from "figma:asset/36b694f179b69db68e228412ca297b91f6fbbae7.png";
 import appScreen2 from "figma:asset/ddd511a576576702adf6b63939e3c4852377ee8e.png";
+import appScreen1Brasil from "./assets/2b0bd1795831ea72492a9d4f5b61be303132e851_brasil.png";
+import appScreen3Brasil from "./assets/36b694f179b69db68e228412ca297b91f6fbbae7_brasil.png";
+import appScreen2Brasil from "./assets/ddd511a576576702adf6b63939e3c4852377ee8e_brasil.png";
 import logo from "./assets/logo.webp";
 import {
   ArrowRight,
@@ -63,6 +66,9 @@ const getDefaultCurrency = (sourceRegion?: string) => {
   if (sourceRegion === "chile") {
     return "CLP";
   }
+  if (sourceRegion === "brasil") {
+    return "BRL";
+  }
 
   const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
 
@@ -96,6 +102,8 @@ export default function App({ sourceRegion }: { sourceRegion?: string } = {}) {
   const [selectedCurrency, setSelectedCurrency] = useState(getDefaultCurrency(sourceRegion));
   const [amount, setAmount] = useState("");
 
+  const isBrasilPage = sourceRegion === "brasil";
+
   const handleCurrencyChange = (value: string) => {
     setSelectedCurrency(value);
     setAmount("");
@@ -119,7 +127,9 @@ export default function App({ sourceRegion }: { sourceRegion?: string } = {}) {
   const playStoreUrl =
     "https://play.google.com/store/apps/details?id=venecol.express";
   const whatsappUrl = `https://wa.me/56933313118?text=${encodeURIComponent(
-    "Hola me gustaría saber como enviar dinero a Venezuela"
+    isBrasilPage
+      ? "Hola, me gustaría saber cómo enviar dinero desde Brasil a Venezuela"
+      : "Hola me gustaría saber como enviar dinero a Venezuela"
   )}`;
   const instagramUrl = "https://www.instagram.com/cambios_venecol/";
 
@@ -164,7 +174,7 @@ export default function App({ sourceRegion }: { sourceRegion?: string } = {}) {
                 className="bg-[#3D6B85] text-white px-6 py-2 rounded-full hover:bg-[#2C5166] transition-colors flex items-center gap-2"
               >
                 <Download className="w-4 h-4" />
-                Descargar App 11
+                Descargar App
               </a>
             </nav>
           </div>
@@ -283,16 +293,46 @@ export default function App({ sourceRegion }: { sourceRegion?: string } = {}) {
                 <span>+15,000 descargas</span>
               </div>
 
-              <h1 className="text-4xl md:text-5xl lg:text-6xl">
-                Envía a Venezuela{" "}
-                <span className="text-yellow-300">HOY mismo</span>
+              <h1 className="text-4xl md:text-5xl lg:text-6xl flex items-center gap-4 flex-wrap">
+                {isBrasilPage && (
+                  <img
+                    src="https://flagcdn.com/96x72/br.png"
+                    srcSet="https://flagcdn.com/144x108/br.png 1.5x, https://flagcdn.com/192x144/br.png 2x"
+                    alt="Brasil"
+                    className="w-16 h-12 md:w-20 md:h-15 rounded-lg shadow-lg"
+                  />
+                )}
+                <span>
+                  {isBrasilPage ? (
+                    <>
+                      Envía desde Brasil a Venezuela{" "}
+                      <span className="text-yellow-300">HOY mismo</span>
+                    </>
+                  ) : (
+                    <>
+                      Envía a Venezuela{" "}
+                      <span className="text-yellow-300">HOY mismo</span>
+                    </>
+                  )}
+                </span>
               </h1>
 
               <p className="text-xl text-white/90">
-                💸 Desde Colombia • Chile • Perú • Brasil
-                <br />
-                🔐 +7 años | Tasas competitivas
-                <br />⚡ Transferencias en minutos
+                {isBrasilPage ? (
+                  <>
+                    💸 Desde Brasil a Venezuela
+                    <br />
+                    🔐 +7 años de confianza | Tasas competitivas
+                    <br />⚡ Transferencias en minutos con Reales Brasileños (BRL)
+                  </>
+                ) : (
+                  <>
+                    💸 Desde Colombia • Chile • Perú • Brasil
+                    <br />
+                    🔐 +7 años | Tasas competitivas
+                    <br />⚡ Transferencias en minutos
+                  </>
+                )}
               </p>
 
               <div className="flex flex-col sm:flex-row gap-4">
@@ -342,14 +382,14 @@ export default function App({ sourceRegion }: { sourceRegion?: string } = {}) {
               <div className="relative z-10 flex justify-center items-center gap-4">
                 <div className="transform translate-y-8 hover:translate-y-4 transition-transform">
                   <ImageWithFallback
-                    src={appScreen1}
+                    src={isBrasilPage ? appScreen1Brasil : appScreen1}
                     alt="Venecol App - Pantalla principal"
                     className="w-48 md:w-56 phone-mockup-rounded shadow-2xl"
                   />
                 </div>
                 <div className="transform hover:scale-105 transition-transform">
                   <ImageWithFallback
-                    src={appScreen2}
+                    src={isBrasilPage ? appScreen2Brasil : appScreen2}
                     alt="Venecol App - Calculadora de envío"
                     className="w-56 md:w-64 phone-mockup-rounded shadow-2xl"
                   />
@@ -365,12 +405,24 @@ export default function App({ sourceRegion }: { sourceRegion?: string } = {}) {
       <section className="py-16 md:py-24 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl text-[#3D6B85] mb-4">
-              ¿Por qué elegir Venecol Express?
+            <h2 className="text-3xl md:text-4xl text-[#3D6B85] mb-4 flex items-center justify-center gap-3">
+              {isBrasilPage && (
+                <img
+                  src="https://flagcdn.com/48x36/br.png"
+                  alt="Brasil"
+                  className="w-12 h-9"
+                />
+              )}
+              <span>
+                {isBrasilPage
+                  ? "¿Por qué enviar desde Brasil con Venecol Express?"
+                  : "¿Por qué elegir Venecol Express?"}
+              </span>
             </h2>
             <p className="text-xl text-gray-600">
-              La mejor opción para enviar dinero a Venezuela de forma rápida y
-              segura
+              {isBrasilPage
+                ? "La mejor opción para enviar Reales Brasileños desde Brasil a Venezuela de forma rápida y segura"
+                : "La mejor opción para enviar dinero a Venezuela de forma rápida y segura"}
             </p>
           </div>
 
@@ -381,8 +433,9 @@ export default function App({ sourceRegion }: { sourceRegion?: string } = {}) {
               </div>
               <h3 className="text-xl text-[#3D6B85] mb-3">Envíos en Minutos</h3>
               <p className="text-gray-600">
-                Tus transferencias llegan en cuestión de minutos. Sin esperas,
-                sin complicaciones.
+                {isBrasilPage
+                  ? "Tus transferencias desde Brasil llegan en cuestión de minutos. Sin esperas, sin complicaciones."
+                  : "Tus transferencias llegan en cuestión de minutos. Sin esperas, sin complicaciones."}
               </p>
             </div>
 
@@ -390,12 +443,11 @@ export default function App({ sourceRegion }: { sourceRegion?: string } = {}) {
               <div className="w-16 h-16 bg-[#3D6B85]/10 rounded-2xl flex items-center justify-center mb-6">
                 <Shield className="w-8 h-8 text-[#3D6B85]" />
               </div>
-              <h3 className="text-xl text-[#3D6B85] mb-3">
-                Seguridad Garantizada
-              </h3>
+              <h3 className="text-xl text-[#3D6B85] mb-3">Seguridad Garantizada</h3>
               <p className="text-gray-600">
-                Más de 7 años brindando un servicio confiable. Tu dinero está en
-                buenas manos.
+                {isBrasilPage
+                  ? "Más de 7 años enviando dinero desde Brasil a Venezuela. Tu dinero está en buenas manos."
+                  : "Más de 7 años brindando un servicio confiable. Tu dinero está en buenas manos."}
               </p>
             </div>
 
@@ -403,12 +455,11 @@ export default function App({ sourceRegion }: { sourceRegion?: string } = {}) {
               <div className="w-16 h-16 bg-[#3D6B85]/10 rounded-2xl flex items-center justify-center mb-6">
                 <Users className="w-8 h-8 text-[#3D6B85]" />
               </div>
-              <h3 className="text-xl text-[#3D6B85] mb-3">
-                Miles Confían en Nosotros
-              </h3>
+              <h3 className="text-xl text-[#3D6B85] mb-3">Miles Confían en Nosotros</h3>
               <p className="text-gray-600">
-                Más de 15,000 personas ya usan Venecol Express para enviar
-                dinero a sus familias.
+                {isBrasilPage
+                  ? "Venezolanos en Brasil ya usan Venecol Express para enviar dinero a sus familias con Reales."
+                  : "Más de 15,000 personas ya usan Venecol Express para enviar dinero a sus familias."}
               </p>
             </div>
           </div>
@@ -422,12 +473,12 @@ export default function App({ sourceRegion }: { sourceRegion?: string } = {}) {
             <div className="order-2 md:order-1">
               <div className="flex gap-4 justify-center">
                 <ImageWithFallback
-                  src={appScreen1}
+                  src={isBrasilPage ? appScreen1Brasil : appScreen1}
                   alt="Venecol App - Vista de inicio"
                   className="w-48 phone-mockup-rounded shadow-xl"
                 />
                 <ImageWithFallback
-                  src={appScreen3}
+                  src={isBrasilPage ? appScreen3Brasil : appScreen3}
                   alt="Venecol App - Confirmación de pago"
                   className="w-48 phone-mockup-rounded shadow-xl"
                 />
@@ -435,24 +486,41 @@ export default function App({ sourceRegion }: { sourceRegion?: string } = {}) {
             </div>
 
             <div className="order-1 md:order-2 space-y-6">
-              <h2 className="text-3xl md:text-4xl text-[#3D6B85]">
-                Fácil, rápido y seguro desde tu celular
+              <h2 className="text-3xl md:text-4xl text-[#3D6B85] flex items-center gap-3">
+                {isBrasilPage && (
+                  <img
+                    src="https://flagcdn.com/48x36/br.png"
+                    srcSet="https://flagcdn.com/72x54/br.png 1.5x, https://flagcdn.com/96x72/br.png 2x"
+                    alt="Brasil"
+                    className="w-10 h-8 md:w-12 md:h-9 rounded shadow-md"
+                  />
+                )}
+                <span>
+                  {isBrasilPage
+                    ? "Envía Reales desde Brasil fácil y rápido"
+                    : "Fácil, rápido y seguro desde tu celular"}
+                </span>
               </h2>
               <p className="text-xl text-gray-600">
-                Calcula la tasa del día, envía dinero y recibe confirmación
-                inmediata. Todo desde la app.
+                {isBrasilPage
+                  ? "Calcula la tasa del día, envía tus Reales Brasileños a Venezuela y recibe confirmación inmediata. Todo desde la app."
+                  : "Calcula la tasa del día, envía dinero y recibe confirmación inmediata. Todo desde la app."}
               </p>
               <ul className="space-y-4">
                 <li className="flex items-start gap-3">
                   <ArrowRight className="w-6 h-6 text-[#3D6B85] flex-shrink-0 mt-1" />
                   <span className="text-gray-700">
-                    Consulta la tasa de cambio actualizada en tiempo real
+                    {isBrasilPage
+                      ? "Consulta la tasa de cambio BRL/VES actualizada en tiempo real"
+                      : "Consulta la tasa de cambio actualizada en tiempo real"}
                   </span>
                 </li>
                 <li className="flex items-start gap-3">
                   <ArrowRight className="w-6 h-6 text-[#3D6B85] flex-shrink-0 mt-1" />
                   <span className="text-gray-700">
-                    Envía desde Colombia, Chile, Perú o Brasil a Venezuela
+                    {isBrasilPage
+                      ? "🇧🇷 Envía desde Brasil a Venezuela con Reales Brasileños (BRL)"
+                      : "Envía desde Colombia, Chile, Perú o Brasil a Venezuela"}
                   </span>
                 </li>
                 <li className="flex items-start gap-3">
@@ -625,7 +693,7 @@ export default function App({ sourceRegion }: { sourceRegion?: string } = {}) {
 
           <div className="pt-8">
             <ImageWithFallback
-              src={appScreen2}
+              src={isBrasilPage ? appScreen2Brasil : appScreen2}
               alt="Venecol Express App"
               className="w-64 mx-auto phone-mockup-rounded shadow-2xl"
             />
