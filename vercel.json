@@ -7,6 +7,10 @@
     {
       "source": "/brasil",
       "destination": "/index.html"
+    },
+    {
+      "source": "/colombia",
+      "destination": "/index.html"
     }
   ],
   "headers": [

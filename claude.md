@@ -10,10 +10,11 @@
 
 ## Estructura Principal
 - `src/App.tsx` - Componente principal de la landing (todo en un solo archivo)
-- `src/main.tsx` - Router con 3 rutas:
+- `src/main.tsx` - Router con 4 rutas:
   - `/` - Landing principal
   - `/sur` - Landing con moneda default CLP (Chile)
   - `/brasil` - Landing 100% enfocada en Brasil (BRL default, textos personalizados)
+  - `/colombia` - Landing 100% enfocada en Colombia (COP default, textos personalizados)
 
 ## Funcionalidades Clave
 
@@ -56,6 +57,16 @@
   - WhatsApp: Mensaje específico para Brasil
   - Banderas 🇧🇷 en múltiples secciones
 - Variable `isBrasilPage` controla todos los condicionales
+
+## Landing Colombia (`/colombia`)
+- Todo en **español** (público objetivo: venezolanos en Colombia)
+- Moneda default: **COP (Pesos Colombianos)**
+- Textos personalizados con énfasis 100% Colombia:
+  - Hero: "🇨🇴 Envía desde Colombia a Venezuela HOY mismo"
+  - Features: Menciona Colombia repetidamente
+  - WhatsApp: Mensaje específico para Colombia
+  - Banderas 🇨🇴 en múltiples secciones
+- Variable `isColombiaPage` controla todos los condicionales
 
 ## Para Editar
 - Textos, precios, monedas → `App.tsx`

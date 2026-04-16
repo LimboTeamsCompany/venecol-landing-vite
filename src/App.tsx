@@ -55,7 +55,7 @@ const currencies = [
   {
     value: "USDT",
     label: "USDT",
-    flagUrl: "https://cryptologos.cc/logos/tether-usdt-logo.png",
+    flagUrl: "https://assets.coingecko.com/coins/images/325/small/Tether.png",
     symbol: "₮",
     minAmount: 10
   },
@@ -68,6 +68,9 @@ const getDefaultCurrency = (sourceRegion?: string) => {
   }
   if (sourceRegion === "brasil") {
     return "BRL";
+  }
+  if (sourceRegion === "colombia") {
+    return "COP";
   }
 
   const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
@@ -103,6 +106,7 @@ export default function App({ sourceRegion }: { sourceRegion?: string } = {}) {
   const [amount, setAmount] = useState("");
 
   const isBrasilPage = sourceRegion === "brasil";
+  const isColombiaPage = sourceRegion === "colombia";
 
   const handleCurrencyChange = (value: string) => {
     setSelectedCurrency(value);
@@ -129,6 +133,8 @@ export default function App({ sourceRegion }: { sourceRegion?: string } = {}) {
   const whatsappUrl = `https://wa.me/56933313118?text=${encodeURIComponent(
     isBrasilPage
       ? "Hola, me gustaría saber cómo enviar dinero desde Brasil a Venezuela"
+      : isColombiaPage
+      ? "Hola, me gustaría saber cómo enviar dinero desde Colombia a Venezuela"
       : "Hola me gustaría saber como enviar dinero a Venezuela"
   )}`;
   const instagramUrl = "https://www.instagram.com/cambios_venecol/";
@@ -302,10 +308,23 @@ export default function App({ sourceRegion }: { sourceRegion?: string } = {}) {
                     className="w-16 h-12 md:w-20 md:h-15 rounded-lg shadow-lg"
                   />
                 )}
+                {isColombiaPage && (
+                  <img
+                    src="https://flagcdn.com/96x72/co.png"
+                    srcSet="https://flagcdn.com/144x108/co.png 1.5x, https://flagcdn.com/192x144/co.png 2x"
+                    alt="Colombia"
+                    className="w-16 h-12 md:w-20 md:h-15 rounded-lg shadow-lg"
+                  />
+                )}
                 <span>
                   {isBrasilPage ? (
                     <>
                       Envía desde Brasil a Venezuela{" "}
+                      <span className="text-yellow-300">HOY mismo</span>
+                    </>
+                  ) : isColombiaPage ? (
+                    <>
+                      Envía desde Colombia a Venezuela{" "}
                       <span className="text-yellow-300">HOY mismo</span>
                     </>
                   ) : (
@@ -324,6 +343,13 @@ export default function App({ sourceRegion }: { sourceRegion?: string } = {}) {
                     <br />
                     🔐 +7 años de confianza | Tasas competitivas
                     <br />⚡ Transferencias en minutos con Reales Brasileños (BRL)
+                  </>
+                ) : isColombiaPage ? (
+                  <>
+                    💸 Desde Colombia a Venezuela
+                    <br />
+                    🔐 +7 años de confianza | Tasas competitivas
+                    <br />⚡ Transferencias en minutos con Pesos Colombianos (COP)
                   </>
                 ) : (
                   <>
@@ -413,15 +439,26 @@ export default function App({ sourceRegion }: { sourceRegion?: string } = {}) {
                   className="w-12 h-9"
                 />
               )}
+              {isColombiaPage && (
+                <img
+                  src="https://flagcdn.com/48x36/co.png"
+                  alt="Colombia"
+                  className="w-12 h-9"
+                />
+              )}
               <span>
                 {isBrasilPage
                   ? "¿Por qué enviar desde Brasil con Venecol Express?"
+                  : isColombiaPage
+                  ? "¿Por qué enviar desde Colombia con Venecol Express?"
                   : "¿Por qué elegir Venecol Express?"}
               </span>
             </h2>
             <p className="text-xl text-gray-600">
               {isBrasilPage
                 ? "La mejor opción para enviar Reales Brasileños desde Brasil a Venezuela de forma rápida y segura"
+                : isColombiaPage
+                ? "La mejor opción para enviar Pesos Colombianos desde Colombia a Venezuela de forma rápida y segura"
                 : "La mejor opción para enviar dinero a Venezuela de forma rápida y segura"}
             </p>
           </div>
@@ -435,6 +472,8 @@ export default function App({ sourceRegion }: { sourceRegion?: string } = {}) {
               <p className="text-gray-600">
                 {isBrasilPage
                   ? "Tus transferencias desde Brasil llegan en cuestión de minutos. Sin esperas, sin complicaciones."
+                  : isColombiaPage
+                  ? "Tus transferencias desde Colombia llegan en cuestión de minutos. Sin esperas, sin complicaciones."
                   : "Tus transferencias llegan en cuestión de minutos. Sin esperas, sin complicaciones."}
               </p>
             </div>
@@ -447,6 +486,8 @@ export default function App({ sourceRegion }: { sourceRegion?: string } = {}) {
               <p className="text-gray-600">
                 {isBrasilPage
                   ? "Más de 7 años enviando dinero desde Brasil a Venezuela. Tu dinero está en buenas manos."
+                  : isColombiaPage
+                  ? "Más de 7 años enviando dinero desde Colombia a Venezuela. Tu dinero está en buenas manos."
                   : "Más de 7 años brindando un servicio confiable. Tu dinero está en buenas manos."}
               </p>
             </div>
@@ -459,6 +500,8 @@ export default function App({ sourceRegion }: { sourceRegion?: string } = {}) {
               <p className="text-gray-600">
                 {isBrasilPage
                   ? "Venezolanos en Brasil ya usan Venecol Express para enviar dinero a sus familias con Reales."
+                  : isColombiaPage
+                  ? "Venezolanos en Colombia ya usan Venecol Express para enviar dinero a sus familias con Pesos."
                   : "Más de 15,000 personas ya usan Venecol Express para enviar dinero a sus familias."}
               </p>
             </div>
@@ -495,15 +538,27 @@ export default function App({ sourceRegion }: { sourceRegion?: string } = {}) {
                     className="w-10 h-8 md:w-12 md:h-9 rounded shadow-md"
                   />
                 )}
+                {isColombiaPage && (
+                  <img
+                    src="https://flagcdn.com/48x36/co.png"
+                    srcSet="https://flagcdn.com/72x54/co.png 1.5x, https://flagcdn.com/96x72/co.png 2x"
+                    alt="Colombia"
+                    className="w-10 h-8 md:w-12 md:h-9 rounded shadow-md"
+                  />
+                )}
                 <span>
                   {isBrasilPage
                     ? "Envía Reales desde Brasil fácil y rápido"
+                    : isColombiaPage
+                    ? "Envía Pesos desde Colombia fácil y rápido"
                     : "Fácil, rápido y seguro desde tu celular"}
                 </span>
               </h2>
               <p className="text-xl text-gray-600">
                 {isBrasilPage
                   ? "Calcula la tasa del día, envía tus Reales Brasileños a Venezuela y recibe confirmación inmediata. Todo desde la app."
+                  : isColombiaPage
+                  ? "Calcula la tasa del día, envía tus Pesos Colombianos a Venezuela y recibe confirmación inmediata. Todo desde la app."
                   : "Calcula la tasa del día, envía dinero y recibe confirmación inmediata. Todo desde la app."}
               </p>
               <ul className="space-y-4">
@@ -512,6 +567,8 @@ export default function App({ sourceRegion }: { sourceRegion?: string } = {}) {
                   <span className="text-gray-700">
                     {isBrasilPage
                       ? "Consulta la tasa de cambio BRL/VES actualizada en tiempo real"
+                      : isColombiaPage
+                      ? "Consulta la tasa de cambio COP/VES actualizada en tiempo real"
                       : "Consulta la tasa de cambio actualizada en tiempo real"}
                   </span>
                 </li>
@@ -520,6 +577,8 @@ export default function App({ sourceRegion }: { sourceRegion?: string } = {}) {
                   <span className="text-gray-700">
                     {isBrasilPage
                       ? "🇧🇷 Envía desde Brasil a Venezuela con Reales Brasileños (BRL)"
+                      : isColombiaPage
+                      ? "🇨🇴 Envía desde Colombia a Venezuela con Pesos Colombianos (COP)"
                       : "Envía desde Colombia, Chile, Perú o Brasil a Venezuela"}
                   </span>
                 </li>
